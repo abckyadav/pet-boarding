@@ -38,8 +38,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const Home = () => {
   const [data, setData] = useState([]);
   const [inputvalue, setinputValue] = useState("");
-
-  const sortOptions = ["name", "city", "verified", "cost", "rating"];
+  let [sortvalue, setSortValue] = useState("");
+  let [filterValue, setFilterValue] = useState("");
 
   useEffect(() => {
     loaduserdata();
@@ -56,7 +56,6 @@ const Home = () => {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-
     return await axios
       .get(`http://localhost:5000/users?q=${inputvalue}`)
       .then((res) => {
@@ -70,6 +69,31 @@ const Home = () => {
 
   const handleReset = () => {
     loaduserdata();
+  };
+
+  const handleSort = async (e) => {
+    let value = e.target.value;
+    setSortValue(value);
+
+    return await axios
+      .get(`http://localhost:5000/users?_sort=${value}&_order=asc`)
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleFilter = async (e) => {
+    let { id, value } = e.target;
+
+    setFilterValue(value);
+
+    return await axios
+      .get(`http://localhost:5000/users?${id}=${value}`)
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -110,9 +134,55 @@ const Home = () => {
 
       <div>
         <TableContainer component={Paper}>
-          <IconButton>
-           
-          </IconButton>
+          <Table>
+            <TableRow>
+              <StyledTableCell align="center">
+                <h5>Sort:</h5>
+                <select
+                  id={sortvalue}
+                  style={{ width: "40%", borderRadius: "5px", height: "35px" }}
+                  onChange={handleSort}
+                  value={sortvalue}
+                >
+                  <option>Please Select One</option>
+                  <option value="name">Name</option>
+                  <option value="cost">Cost</option>
+                  <option value="rating">Rating</option>
+                </select>
+              </StyledTableCell>
+
+              <StyledTableCell align="center">
+                <h5>Filter By City</h5>{" "}
+                <select
+                  id="city"
+                  style={{ width: "40%", borderRadius: "5px", height: "35px" }}
+                  onChange={handleFilter}
+                  value={filterValue}
+                >
+                  <option>Please Select One</option>
+                  <option value="Delhi">Delhi</option>
+                  <option value="Mumbai">Mumbai</option>
+                  <option value="Kolkata">Kolkata</option>
+                  <option value="Patna">Patna</option>
+                  <option value="Gaya">Gaya</option>
+                </select>
+              </StyledTableCell>
+
+              <StyledTableCell align="center">
+                <h5>Verfied</h5>{" "}
+                <select
+                  id="verified"
+                  style={{ width: "40%", borderRadius: "5px", height: "35px" }}
+                  onChange={handleFilter}
+                  value={filterValue}
+                >
+                  <option>---</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </StyledTableCell>
+            </TableRow>
+          </Table>
 
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
@@ -146,7 +216,6 @@ const Home = () => {
                     <StyledTableCell align="center">
                       {row.capacity}
                     </StyledTableCell>
-                    <StyledTableCell align="center">{row.cost}</StyledTableCell>
                     <StyledTableCell align="center">{row.cost}</StyledTableCell>
                     <StyledTableCell align="center">
                       {row.verified}
