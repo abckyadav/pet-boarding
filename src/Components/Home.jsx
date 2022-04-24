@@ -133,7 +133,10 @@ const Home = () => {
       </form>
 
       <div>
-        <TableContainer component={Paper}>
+        <TableContainer
+          component={Paper}
+          style={{ width: "80%", margin: "auto" }}
+        >
           <Table>
             <TableRow>
               <StyledTableCell align="center">
