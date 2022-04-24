@@ -31,7 +31,16 @@ const AddPets = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(postPet(state));
-    navigate
+    alert(`${name} details is added`);
+    setState({
+      name: "",
+      city: "",
+      address: "",
+      capacity: "",
+      cost: "",
+      verified: "",
+      rating: "",
+    });
   };
 
   return (
@@ -117,6 +126,7 @@ const AddPets = () => {
             type="number"
             name="rating"
             value={rating}
+            placeholder="between 1 to 5"
             onChange={handleChange}
           />
 

@@ -8,12 +8,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
-
 import TextField from "@mui/material/TextField";
-import IconButton from "@mui/material/IconButton";
+import { useNavigate } from "react-router-dom";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -40,6 +38,7 @@ const Home = () => {
   const [inputvalue, setinputValue] = useState("");
   let [sortvalue, setSortValue] = useState("");
   let [filterValue, setFilterValue] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     loaduserdata();
@@ -205,7 +204,10 @@ const Home = () => {
                 <h1>No Data Found</h1>
               ) : (
                 data.map((row) => (
-                  <StyledTableRow key={row.id}>
+                  <StyledTableRow
+                    key={row.id}
+                    onClick={() => navigate(`/${row.id}`)}
+                  >
                     <StyledTableCell component="th" scope="row">
                       {row.id}
                     </StyledTableCell>

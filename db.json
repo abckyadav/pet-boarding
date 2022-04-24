@@ -200,6 +200,16 @@
       "cost": 3454,
       "verified": "yes",
       "rating": 5
+    },
+    {
+      "name": "Sky Limit",
+      "city": "Kolkata",
+      "address": "new west salt lake",
+      "capacity": "5",
+      "cost": "5000",
+      "verified": "yes",
+      "rating": "5",
+      "id": 21
     }
   ]
 }
