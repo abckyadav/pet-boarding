@@ -18,9 +18,7 @@ const Navbar = () => {
           <Link style={styling} to="/">
             <Button color="inherit">Home</Button>
           </Link>
-          <Link style={styling} to="/about">
-            <Button color="inherit">About</Button>
-          </Link>
+
           <Link to="/add">
             <Button style={styling} color="inherit">
               Add New Data
